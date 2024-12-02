@@ -2,17 +2,34 @@ import java.util.Scanner;
 
 public class Kelompok_6 {
     static Scanner sc = new Scanner(System.in);
-    String[] nama = new String[3];
-    String[] NIM = new String[3];
-    String[] kodeMatkul = new String[3];
-    String[] SKS = new String[3];
-    String[] namaMatkul = new String[3];
-    String[][] KRSMhs = {
+    static String[] nama = new String[10];
+    static String[] NIM = new String[10];
+    static String[] kodeMatkul = new String[10];
+    static String[] SKS = new String[10];
+    static String[] namaMatkul = new String[10];
+    static String[][] KRSMhs = {
         nama, NIM, kodeMatkul, SKS, namaMatkul
     };
 
     public static void exit () {
-        
+        System.out.println("Terimakasih!");
+    }
+
+    public static void analisisData() {
+        System.out.println("--- Analisis Data KRS ---");
+        int count = 0;
+        for (int i = 0; i < KRSMhs[0].length; i++) {
+            int totalSKSMahasiswa = 0;
+            for (int j = 0; j < KRSMhs[0].length; j++) {
+                if (NIM[i].equals(NIM[j])) {
+                    totalSKSMahasiswa += Integer.parseInt(SKS[j]);
+                }
+            }
+            if (totalSKSMahasiswa < 20) {
+                count++;
+            }
+        }
+        System.out.println("Jumlah mahasiswa dengan total SKS kurang dari 20: " + count);
     }
     public static void menu() {
         System.out.println("===Sistem Pemantauan KRS mahasiswa===");
@@ -30,7 +47,7 @@ public class Kelompok_6 {
                 
                 break;
             case 3:
-                
+                analisisData();
                 break;
             case 4:
                 exit();
@@ -43,6 +60,6 @@ public class Kelompok_6 {
         }
     }
     public static void main(String[] args) {
-       
+       menu();
     }
 }
