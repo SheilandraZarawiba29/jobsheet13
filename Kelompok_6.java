@@ -30,6 +30,7 @@ public class Kelompok_6 {
             }
         }
         System.out.println("Jumlah mahasiswa dengan total SKS kurang dari 20: " + count);
+        menu();
     }
     public static void menu() {
         System.out.println("===Sistem Pemantauan KRS mahasiswa===");
