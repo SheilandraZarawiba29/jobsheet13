@@ -2,11 +2,11 @@ import java.util.Scanner;
 
 public class Kelompok_6 {
     static Scanner sc = new Scanner(System.in);
-    static String[] nama = new String[1];
-    static String[] NIM = new String[1];
-    static String[] kodeMatkul = new String[1];
-    static String[] SKS = new String[1];
-    static String[] namaMatkul = new String[1];
+    static String[] nama = new String[100];
+    static String[] NIM = new String[100];
+    static String[] kodeMatkul = new String[100];
+    static String[] SKS = new String[100];
+    static String[] namaMatkul = new String[100];
     static String[][] KRSMhs = {
         nama, 
         NIM, 
@@ -41,9 +41,8 @@ public class Kelompok_6 {
 
     public static void tampilkanData() {
         System.out.println("--- Tamilkan Data KRS Mahasiswa ---");
-        
         System.out.print("Masukkan NIM Mahasiswa: ");
-        int nim = sc.nextInt();
+        String nim = sc.nextLine();
 
         System.out.println("\nDaftar KRS:");
         System.out.printf("%-10s", "NIM");
@@ -53,35 +52,39 @@ public class Kelompok_6 {
         System.out.printf("%-3s", "SKS");
         System.out.println();
 
-        if (KRSMhs[0][0] != null) {
-            int totalSKSMahasiswa = 0;
-            for (int i = 0; i < KRSMhs[2].length; i++) {
-                    if (nim != Integer.parseInt(KRSMhs[1][i])) {
-                   break; 
-                }
+        int totalSKSMahasiswa = 0;
+        boolean found = false;
+        for (int i = 0; i < KRSMhs[0].length; i++) {
+            if (KRSMhs[1][i] != null && nim.equals(KRSMhs[1][i])) {
                 System.out.printf("%-10s", KRSMhs[1][i]);
                 System.out.printf("%-20s", KRSMhs[0][i]);
                 System.out.printf("%-12s", KRSMhs[2][i]);
                 System.out.printf("%-25s", KRSMhs[4][i]);
                 System.out.printf("%-3s", KRSMhs[3][i]);
                 System.out.println();
-    
-                totalSKSMahasiswa += Integer.parseInt(KRSMhs[3][i]);
+        
+            totalSKSMahasiswa += Integer.parseInt(KRSMhs[3][i]);
+                found = true;
             }
-            System.out.printf("Total SKS: %d%n", totalSKSMahasiswa);
         }
+        if (found) {
+            System.out.printf("Total SKS: %d%n", totalSKSMahasiswa);
+        } else {
+            System.out.println("Data KRS mahasiswa dengan NIM " + nim + " tidak ditemukan.");
+        }
+
         menu();
     }
 
-    public static void newStringArray(String[][] data) {
-        String[][] old = data;
-        data = new String[old.length + 1][old[0].length];
-        for (int row = 0; row < old.length; row++) {
-            for (int col = 0; col < old[row].length; col++) {
-                data[row][col] = old[row][col];
-            }
-        }
-    }
+    // public static void newStringArray(String[][] data) {
+    //     String[][] old = data;
+    //     data = new String[old.length + 1][old[0].length];
+    //     for (int row = 0; row < old.length; row++) {
+    //         for (int col = 0; col < old[row].length; col++) {
+    //             data[row][col] = old[row][col];
+    //         }
+    //     }
+    // }
 
     public static String validasiInputSKS() {
         System.out.print("Jumlah SKS (1-3): ");
@@ -99,29 +102,36 @@ public class Kelompok_6 {
 
         System.out.print("Nama Mahasiswa: ");
         String nama = sc.nextLine();
-        sc.nextLine();
         System.out.print("NIM: ");
         String nim = sc.nextLine();
 
         int totalSKS = 0;
 
         while (confirm) {
-            if (KRSMhs[0][0] != null) {
-                newStringArray(KRSMhs);
+            int emptyIndex = -1;
+            for (int i = 0; i < KRSMhs[0].length; i++) {
+                if (KRSMhs[0][i] == null) {
+                    emptyIndex = i;
+                    break;
+                }
             }
 
-            KRSMhs[0][KRSMhs[0].length-1] = nama;
-            KRSMhs[1][KRSMhs[0].length-1] = nim;
+            if (emptyIndex == -1) {
+                System.out.println("Array penuh, tidak dapat menambah data!");
+                break;
+            }
+
+            KRSMhs[0][emptyIndex] = nama;
+            KRSMhs[1][emptyIndex] = nim;
 
             System.out.print("Kode Mata Kuliah: ");
-            KRSMhs[2][KRSMhs[0].length-1] = sc.nextLine();
-            
+            KRSMhs[2][emptyIndex] = sc.nextLine();
+
             System.out.print("Nama Mata Kuliah: ");
-            KRSMhs[4][KRSMhs[0].length-1] = sc.nextLine();
-            
-            
+            KRSMhs[4][emptyIndex] = sc.nextLine();
+
             String sks = validasiInputSKS();
-            KRSMhs[3][KRSMhs[0].length-1] = sks;
+            KRSMhs[3][emptyIndex] = sks;
             totalSKS += Integer.parseInt(sks);
             
             System.out.print("Tambah mata kuliah lain? (y/t): ");
@@ -141,6 +151,7 @@ public class Kelompok_6 {
         System.out.println("4. Keluar");
         System.out.print("Pilih menu: ");
         int opsi = sc.nextInt();
+        sc.nextLine();
         switch (opsi) {
             case 1:
                 tambahkanData();
