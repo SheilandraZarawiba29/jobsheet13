@@ -22,11 +22,11 @@ public class Kelompok_6 {
     public static void analisisData() {
         System.out.println("--- Analisis Data KRS ---");
         int count = 0;
-        if (KRSMhs[0][0] != null) {
-            for (int i = 0; i < KRSMhs[0].length; i++) {
+        for (int i = 0; i < KRSMhs[1].length; i++) {
+            if (KRSMhs[1][i] != null) {
                 int totalSKSMahasiswa = 0;
-                for (int j = 0; j < KRSMhs[0].length; j++) {
-                    if (KRSMhs[1][i].equals(KRSMhs[1][j])) {
+                for (int j = 0; j < KRSMhs[1].length; j++) {
+                    if (KRSMhs[i][j] != null && KRSMhs[1][i].equals(KRSMhs[1][j])) {
                         totalSKSMahasiswa += Integer.parseInt(KRSMhs[3][j]);
                     }
                 }
@@ -74,17 +74,7 @@ public class Kelompok_6 {
         }
 
         menu();
-    }
-
-    // public static void newStringArray(String[][] data) {
-    //     String[][] old = data;
-    //     data = new String[old.length + 1][old[0].length];
-    //     for (int row = 0; row < old.length; row++) {
-    //         for (int col = 0; col < old[row].length; col++) {
-    //             data[row][col] = old[row][col];
-    //         }
-    //     }
-    // }
+    } 
 
     public static String validasiInputSKS() {
         System.out.print("Jumlah SKS (1-3): ");
